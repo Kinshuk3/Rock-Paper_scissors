@@ -20,6 +20,15 @@ const game = () => {
         const options = document.querySelectorAll('.options button');
         const playerHand = document.querySelector('.player-hand');
         const computerHand = document.querySelector('.computer-hand');
+        const hands = document.querySelectorAll('.hands img');
+
+        //remove animation everytime a player goes for a new round
+        hands.forEach(hand =>{
+            hand.addEventListener('animationend', function(){
+                this.style.animation = '';
+            });
+        });
+
         //options for computer which would be random
         const computerOptions = ['rock', 'paper', 'scissors'];
         
@@ -30,12 +39,17 @@ const game = () => {
             const computerNumber = Math.floor(Math.random() * 3);
             const computerChoice = computerOptions[computerNumber];
 
+            setTimeout(() => {
             //compare hands to start the match
             compareHands(this.textContent, computerChoice);
 
             //update images based on the choice of both players
             playerHand.src = `./img/${this.textContent}.png`;
             computerHand.src = `./img/${computerChoice}.png`;
+            }, 2000);
+            //animation to shake hands
+            playerHand.style.animation ="shakePlayer 2s ease";
+            computerHand.style.animation ="shakeComputer 2s ease";
             });
         });  
     };
